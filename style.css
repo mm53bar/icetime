@@ -1,0 +1,26 @@
+#message {
+  color: #DDD;
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+#timer {
+  font-size: 200px;
+  line-height: 1;
+  margin-bottom: 40px;
+}
+
+.monospace {
+  font-family: "Courier New", Courier, monospace;	
+}
+
+.player {
+  color: white;
+}
+.player-active {
+  background: green;
+}
+
+.player-inactive {
+  background: red;
+}
