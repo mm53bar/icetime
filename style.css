@@ -1,13 +1,6 @@
-#message {
-  color: #DDD;
-  font-size: 50px;
-  margin-bottom: 20px;
-}
-
 #timer {
-  font-size: 200px;
+  font-size: 5vw;
   line-height: 1;
-  margin-bottom: 40px;
 }
 
 .monospace {
@@ -15,12 +8,43 @@
 }
 
 .player {
-  color: white;
-}
-.player-active {
-  background: green;
+  display: inline-grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 50% 50%;
+  padding-left: .1em;
+  padding-right:  .1em;
+  padding-top:  .1em;
+  padding-bottom: .1em;
+  grid-template-areas:
+      "number name"
+      "number time";
 }
 
-.player-inactive {
-  background: red;
+.player-number {
+  grid-area: number;
+  font-size: larger;
+}
+
+.player-name {
+  grid-area: name;
+  font-size: smaller
+}
+
+.player-time {
+  grid-area: time;
+  font-size: smaller;
+}
+
+.forwards {
+  padding-top: 2vw;
+  display: grid;
+  grid-template-columns: 15vw 15vw 15vw;
+  grid-gap: 1vw;
+}
+
+.defense {
+  padding-top: 2vw;
+  display: grid;
+  grid-template-columns: 15vw 15vw;
+  grid-gap: 1vw; 
 }

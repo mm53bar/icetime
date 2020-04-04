@@ -2,8 +2,13 @@ window.Event = new Vue();
 
 Vue.component('player', {
   template: `
-    <button @click='toggle' class='player' :class="[isActive ? 'player-active' : 'player-inactive']"><slot></slot> {{ time }}</button>
+  <a @click='toggle' class='player button is-rounded is-large' :class="[isActive ? 'is-success' : 'is-danger']">
+    <span class="player-number">{{ number }}</span>
+    <span class="player-name"><slot></slot></span>
+    <span class="player-time">{{minutes}}:{{seconds}}</span>
+  </a>
   `,
+  props: ['number'],
   data() {
     return {
       isActive: false,
@@ -19,6 +24,19 @@ Vue.component('player', {
     },
     increment(){
       if(this.isActive) this.time += 1;
+    },
+    padTime(num){
+      return (num < 10 ? '0' : '') + num.toString();
+    }
+  },
+  computed: {
+    minutes: function() {
+      const minutes = Math.floor(this.time / 60);
+      return this.padTime(minutes);
+    },
+    seconds: function() {
+      const seconds = this.time % 60;
+      return this.padTime(seconds);
     }
   }
 })
@@ -26,17 +44,13 @@ Vue.component('player', {
 Vue.component('clock', {
   template: `
   <div id="timer">
-    <span id="minutes" class="monospace">{{minutes}}</span>
-    <span id="middle" class="monospace">:</span>
-    <span id="seconds" class="monospace">{{seconds}}</span>
-    <div id="buttons">
-      <button class="button is-dark is-large" @click="playPause()"> 
-        <i class="far" v-bind:class="{'fa-pause-circle': getPlayState(), 'fa-play-circle': !getPlayState()}"></i>
-      </button>
-      <button id="reset" class="button is-dark is-large" @click="reset()"> 
-        <i class="fas fa-undo"></i>
-      </button>
-    </div>
+    <button class="button is-large is-success" @click="playPause()"> 
+      <i class="far" v-bind:class="{'fa-pause-circle': getPlayState(), 'fa-play-circle': !getPlayState()}"></i>
+    </button>
+    <span class="monospace">{{minutes}}:{{seconds}}</span>
+    <button id="reset is-small" class="button" @click="reset()"> 
+      <i class="fas fa-undo"></i>
+    </button>
   </div>
   `,
   data() {
