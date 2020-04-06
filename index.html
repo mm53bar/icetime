@@ -6,30 +6,53 @@
     <link rel="stylesheet" href="style.css"/>
   </head>
   <body>
-    <section id="app" class="section">
+    <div id="app" style="display: flex; flex-direction: column;">
+    <header>
       <clock></clock>
-      <div class="container players forwards">
-        <player number="7">Nik</player>
-        <player number="10">Noah</player>
-        <player number="9">Jet</player>
-        <player number="17">Shadi</player>
-        <player number="11">Brayden</player>
-        <player number="12">Fergus</player>
-        <player number="14">Samuel</player>
-        <player number="15">Jake</player>
-        <player number="16">Ethan</player>
-        <player number="19">Griffin</player>
-        <player number="20">Nicholas</player>
-      </div>
-      <div class="container players defense">
-        <player number="5">Sam</player>
-        <player number="6">Keaton</player>
-        <player number="3">Nathan</player>
-        <player number="8">Declin</player>
-        <player number="2">Zach</player>
-        <player number="4">Kameron</player>
-      </div>
-    </section>
+    </header>
+    <main style="
+        /* Take the remaining height */
+        flex-grow: 1;
+
+        /* Layout the left sidebar, main content and right sidebar */
+        display: flex;
+        flex-direction: row;
+    ">
+        <!-- Main content -->
+        <article style="
+            /* Take the remaining width */
+            flex-grow: 1;
+        ">
+          <div class="players forwards">
+            <player number="7">Nik</player>
+            <player number="10">Noah</player>
+            <player number="9">Jet</player>
+            <player number="17">Shadi</player>
+            <player number="11">Brayden</player>
+            <player number="12">Fergus</player>
+            <player number="14">Samuel</player>
+            <player number="15">Jake</player>
+            <player number="16">Ethan</player>
+            <player number="19">Griffin</player>
+            <player number="20">Nicholas</player>
+          </div>
+          <div class="players defense">
+            <player number="5">Sam</player>
+            <player number="6">Keaton</player>
+            <player number="3">Nathan</player>
+            <player number="8">Declin</player>
+            <player number="2">Zach</player>
+            <player number="4">Kameron</player>
+          </div>
+        </article>
+
+        <!-- Right sidebar -->
+        <aside style="
+            width: 25%;
+        ">...</nav>
+    </main>
+</div>
+
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="main.js"></script>
   </body>
