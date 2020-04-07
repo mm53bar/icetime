@@ -7,17 +7,41 @@
   font-family: "Courier New", Courier, monospace;	
 }
 
+.roster {
+  display: flex;
+  flex-direction: column;
+  width: 20vw;
+}
+
+.lineup {
+  width: 100%;
+  background-color: lightgray;
+  padding: 15px;
+
+}
+
 .player {
   display: inline-grid;
+  width: 15vw;
   grid-template-columns: 1fr 2fr;
-  grid-template-rows: 50% 50%;
   padding-left: .1em;
   padding-right:  .1em;
   padding-top:  .1em;
   padding-bottom: .1em;
   grid-template-areas:
+      "number name";
+}
+
+.lineup .player {
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 50% 50%;
+  grid-template-areas:
       "number name"
       "number time";
+}
+
+.lineup .player-time {
+  display: inherit;
 }
 
 .player-number {
@@ -33,17 +57,23 @@
 .player-time {
   grid-area: time;
   font-size: smaller;
+  display: none;
 }
 
-.forwards {
+.lineup .forwards {
   padding-top: 2vw;
+  background-color: #313131;
+  height: 50vh;
   display: grid;
-  grid-template-columns: 15vw 15vw 15vw;
   grid-gap: 1vw;
+  grid-template-columns: 15vw 15vw 15vw;
 }
 
-.defense {
+.lineup .defense {
+  margin-top: 2vw;
   padding-top: 2vw;
+  background-color: #313131;
+  height: 30vh;
   display: grid;
   grid-template-columns: 15vw 15vw;
   grid-gap: 1vw; 
