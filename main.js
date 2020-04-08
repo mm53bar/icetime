@@ -3,14 +3,12 @@ window.Event = new Vue();
 Vue.component('lineup', {
   template: `
     <div @dragover.prevent @drop.prevent='drop' class='lineup'>
-      <div class='forwards'/>
-      <div class='defense'/>
+      <slot></slot>
     </div>
   `,
   methods: {
     drop: e => {
-      const player_id = e.dataTransfer.getData('player_id');
-      const player = document.getElementById(player_id);
+      const player = document.querySelector('.dragging')
       e.target.appendChild(player);
     }
   }
@@ -18,23 +16,29 @@ Vue.component('lineup', {
 
 Vue.component('roster', {
   template: `
-    <div class="roster">
-      <player id="player-1" number="5" draggable='true'>Sam</player>
-      <player id="player-2" number="6" draggable='true'>Keaton</player>
-      <player id="player-3" number="8" draggable='true'>Nik</player>
+    <div class="roster" @dragover.prevent @drop.prevent='drop'>
+      <player number="5" draggable='true'>Sam</player>
+      <player number="6" draggable='true'>Keaton</player>
+      <player number="8" draggable='true'>Nik</player>
     </div>
-  `
+  `,
+  methods: {
+    drop: e => {
+      const player = document.querySelector('.dragging')
+      e.target.appendChild(player);    
+    }
+  }
 });
 
 Vue.component('player', {
   template: `
-  <a :id='id' :draggable='draggable' @dragstart='dragStart' @dragend='dragEnd' @dragover.stop @click='toggle' class='player button is-rounded is-large' :class="[activeClass]">
+  <a :draggable='draggable' @dragstart='dragStart' @dragend='dragEnd' @dragover.prevent='dragOver' @dragenter.prevent='dragEnter' @dragleave='dragLeave' @drop.prevent='drop' @click='toggle' class='player button is-rounded is-large' :class="[activeClass]">
     <span class="player-number">{{ number }}</span>
     <span class="player-name"><slot></slot></span>
     <span class="player-time">{{minutes}}:{{seconds}}</span>
   </a>
   `,
-  props: ['number', 'id', 'draggable'],
+  props: ['number', 'draggable'],
   data() {
     return {
       isActive: false,
@@ -56,15 +60,31 @@ Vue.component('player', {
     },
     dragStart: e => {
       const target = e.target;
-      e.dataTransfer.setData('player_id', target.id);
       setTimeout(() => {
-        target.style.display = 'none';
+        target.classList.add('dragging');
       }, 0);
     },
     dragEnd: e => {
       const target = e.target;
-      target.style.display = 'inherit';
-    }
+      target.classList.remove('dragging');
+    },
+    dragEnter: e => {
+      const target = e.target.closest('.player');
+      target.classList.add('dragging-over');
+    },
+    dragLeave: e => {
+      const target = e.target.closest('.player');
+      target.classList.remove('dragging-over');
+    },
+    dragOver: e => {
+      const target = e.target.closest('.player');
+      const container = target.closest('.dropzone');
+      const player = document.querySelector('.dragging');
+      container.insertBefore(player, target);
+    },
+    drop: e => {
+
+    }    
  },
   computed: {
     minutes: function() {
