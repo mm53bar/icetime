@@ -32,7 +32,7 @@ Vue.component('roster', {
 
 Vue.component('player', {
   template: `
-  <a :draggable='draggable' @dragstart='dragStart' @dragend='dragEnd' @dragover.prevent='dragOver' @dragenter.prevent='dragEnter' @dragleave='dragLeave' @drop.prevent='drop' @click='toggle' class='player button is-rounded is-large' :class="[activeClass]">
+  <a :draggable='draggable' @dragstart='dragStart' @dragend='dragEnd' @dragover.prevent @dragenter.prevent='dragEnter' @dragleave='dragLeave' @drop.prevent='drop' @click='toggle' class='player button is-rounded is-large' :class="[activeClass]">
     <span class="player-number">{{ number }}</span>
     <span class="player-name"><slot></slot></span>
     <span class="player-time">{{minutes}}:{{seconds}}</span>
@@ -60,6 +60,7 @@ Vue.component('player', {
     },
     dragStart: e => {
       const target = e.target;
+      e.dataTransfer.setData('text/html', target.innerHTML);
       setTimeout(() => {
         target.classList.add('dragging');
       }, 0);
@@ -76,14 +77,12 @@ Vue.component('player', {
       const target = e.target.closest('.player');
       target.classList.remove('dragging-over');
     },
-    dragOver: e => {
-      const target = e.target.closest('.player');
-      const container = target.closest('.dropzone');
-      const player = document.querySelector('.dragging');
-      container.insertBefore(player, target);
-    },
     drop: e => {
-
+      const target = e.target.closest('.player');
+      const player = document.querySelector('.dragging');
+      player.innerHTML = target.innerHTML;
+      target.innerHTML = event.dataTransfer.getData('text/html');
+      e.stopPropagation();
     }    
  },
   computed: {
