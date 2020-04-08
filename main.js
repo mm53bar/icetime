@@ -17,11 +17,131 @@ Vue.component('lineup', {
 Vue.component('roster', {
   template: `
     <div class="roster" @dragover.prevent @drop.prevent='drop'>
-      <player number="5" draggable='true'>Sam</player>
-      <player number="6" draggable='true'>Keaton</player>
-      <player number="8" draggable='true'>Nik</player>
+      <player v-for="player in playerList" draggable="true" :number="player.number">
+      {{ player.first }}
+      </player>
     </div>
   `,
+  data() {
+    return {
+      playerList: [
+        {
+            "number": "2",
+            "first": " Zachary",
+            "last": "Bressler",
+            "position": ""
+        },
+        {
+            "number": "3",
+            "first": "Nathan",
+            "last": "Laforge",
+            "position": ""
+        },
+        {
+            "number": "4",
+            "first": "Kameron",
+            "last": "Lawrence",
+            "position": ""
+        },
+        {
+            "number": "5",
+            "first": "Sam",
+            "last": "McClenaghan",
+            "position": ""
+        },
+        {
+            "number": "6",
+            "first": "Keaton",
+            "last": "Daley",
+            "position": ""
+        },
+        {
+            "number": "7",
+            "first": "Nikolai",
+            "last": "Belyea",
+            "position": ""
+        },
+        {
+            "number": "8",
+            "first": "Declin",
+            "last": "Rowswell",
+            "position": ""
+        },
+        {
+            "number": "9",
+            "first": "Jet",
+            "last": "Devlin",
+            "position": ""
+        },
+        {
+            "number": "10",
+            "first": "Noah",
+            "last": "Haney",
+            "position": ""
+        },
+        {
+            "number": "11",
+            "first": "Brayden",
+            "last": "Spaans",
+            "position": ""
+        },
+        {
+            "number": "12",
+            "first": "Fergus",
+            "last": "McGarry",
+            "position": ""
+        },
+        {
+            "number": "14",
+            "first": "Samuel",
+            "last": "Robbins-Burnstick",
+            "position": ""
+        },
+        {
+            "number": "15",
+            "first": "Jake",
+            "last": "Hutnan",
+            "position": ""
+        },
+        {
+            "number": "16",
+            "first": "Ethan",
+            "last": "Lobel",
+            "position": ""
+        },
+        {
+            "number": "17",
+            "first": "Shadi",
+            "last": "Nally",
+            "position": ""
+        },
+        {
+            "number": "19",
+            "first": "Griffin",
+            "last": "Erickson",
+            "position": ""
+        },
+        {
+            "number": "20",
+            "first": "Nicholas",
+            "last": "Stabile",
+            "position": ""
+        },
+        {
+            "number": "29",
+            "first": "James",
+            "last": "Hunt",
+            "position": ""
+        },
+        {
+            "number": "31",
+            "first": "Blake",
+            "last": "Brown",
+            "position": ""
+        }
+    ]
+    }
+  },
   methods: {
     drop: e => {
       const player = document.querySelector('.dragging')
@@ -60,7 +180,6 @@ Vue.component('player', {
     },
     dragStart: e => {
       const target = e.target;
-      e.dataTransfer.setData('text/html', target.innerHTML);
       setTimeout(() => {
         target.classList.add('dragging');
       }, 0);
@@ -79,9 +198,12 @@ Vue.component('player', {
     },
     drop: e => {
       const target = e.target.closest('.player');
+      const targetSibling = target.nextSibling; 
+      const targetContainer = target.parentElement;
       const player = document.querySelector('.dragging');
-      player.innerHTML = target.innerHTML;
-      target.innerHTML = event.dataTransfer.getData('text/html');
+      const playerContainer = player.parentElement;
+      playerContainer.insertBefore(target, player);
+      targetContainer.insertBefore(player, targetSibling);
       e.stopPropagation();
     }    
  },
